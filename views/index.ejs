@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/34162fcf4d.js" defer crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!--main container-->
+    <div class="container">
+        <!--navbar-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand text-center font-weight-bold text-danger h1" href="#">HABITS TRACKER</a>
+            </div>
+        </nav>
+
+        <!--switch-view-->
+
+
+        <!--form-->
+        <form method="post" action="/create" class="mt-5">
+            <div class="my-2 d-flex justify-content-between align-items-center">
+                <label class="font-weight-bold text-primary">ADD HABIT</label>
+                <a class="ml-auto font-weight-bold btn btn-md btn-outline-info" href="/week">WEEKLY VIEW</a>
+            </div>
+
+            <input type="text" name="name" class="form-control" placeholder="Add habits here..." />
+            <button class="btn btn-md btn-success btn-block mt-2" type="submit">Submit</button>
+        </form>
+
+        <!--display habits-->
+        <ul class="list-group my-4 ">
+
+            <h5 class="text-primary">HABITS LIST</h5>
+            <% habits.forEach(habit=>{%>
+                <li class="mt-2 list-group-item d-flex  justify-content-between align-items-center"
+                    style="background-color:rgb(240, 240, 235)">
+                    <div class="w-50">
+                        <%= habit.name %>
+                    </div>
+                    <div class="">
+                        <% var found=false;%>
+                            <%habit.dates.forEach(h=>{%>
+                                <%if(h.date==date){%>
+                                    <%found=true;%>
+                                        <%if(h.complete==='done' ){%>
+                                            <a href="/toggle/?date=<%=h.date%>&id=<%=habit._id%>&index=<%=date%>"
+                                                class="badge badge-success">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                            <%}else if(h.complete==='not done' ){%>
+                                                <a href="/toggle/?date=<%=h.date%>&id=<%=habit._id%>&index=<%=date%>"
+                                                    class="badge badge-danger">
+                                                    <i class="fa fa-xmark"></i>
+                                                </a>
+                                                <%}else if(h.complete==='none' ){%>
+                                                    <a href="/toggle/?date=<%=h.date%>&id=<%=habit._id%>&index=<%=date%>"
+                                                        class="badge badge-warning">
+                                                        <i class="fa fa-hourglass"></i>
+                                                    </a>
+                                                    <%}%>
+                                                        <%}%>
+                                                            <%})%>
+                                                                <%if(!found){%>
+                                                                    <a href="/toggle/?date=<%=date%>&id=<%=habit._id%>&index=<%=date%>"
+                                                                        class="badge badge-warning">none</a>
+                                                                    <% }%>
+
+
+                    </div>
+                    <div class="badge badge-info">
+                        <%=date %>
+                    </div>
+
+                    <div><a href="/delete/<%=habit._id%>" class="text-danger fa fa-trash"></a></div>
+                </li>
+                <% })%>
+        </ul>
+    </div>
+
+</body>
+
+</html>
