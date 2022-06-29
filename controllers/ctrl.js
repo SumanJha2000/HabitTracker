@@ -15,11 +15,6 @@ const ctrl = {
     //add  habit 
     postHabit: async (req, res) => {
         try {
-            // const habitDuplicate = await Habit.find({ name: req.body.name });
-            // if (habitDuplicate) {
-            //     console.log('duplicate habit');
-            //     return;
-            // }
             const dates = [];
             const d = new Date();
             const v = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
@@ -61,7 +56,7 @@ const ctrl = {
         }
     },
 
-    //toggle status
+    //toggle status done ,not done and none
     toggleStatus: async (req, res) => {
         const id = req.query.id;
         const d = req.query.date;
@@ -104,7 +99,7 @@ const ctrl = {
     }
 }
 
-//function to get date in specific formmat
+//function to get date in specific formmat and current day name
 function getDay(n) {
     var d = new Date();
     d.setDate(d.getDate() + n);
